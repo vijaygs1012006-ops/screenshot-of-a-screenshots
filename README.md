@@ -2,48 +2,48 @@
 
 
 
-# [screenshot of a screenshot] 🎯
+# screenshot of a screenshot 🎯
 
 
 ## Basic Details
-### Team Name: [worst]
+### Team Name: worst
 
 
 ### Team Members
-- Team Lead: [VIJAY GS] - [ACE COLLEGE OF ENGINEERING,KARINKADAMUGAL]
-- Member 2: [ABHINAV D] - [ACE COLLEGE OF ENGINEERING,KARINKADAMUGAL]
+- Team Lead: VIJAY GS - ACE COLLEGE OF ENGINEERING,KARINKADAMUGAL
+- Member 2: ABHINAV D - ACE COLLEGE OF ENGINEERING,KARINKADAMUGAL
 
 
 ### Project Description
-[screenshot already exist.but what if we could screenshot the screenshot?,and the screenshot that screenshot]
+screenshot already exist.but what if we could screenshot the screenshot?,and the screenshot that screenshot
 
 ### The Problem (that doesn't exist)
-[screenshotting a screenshot infinte times]
+screenshotting a screenshot infinte times
 
 ### The Solution (that nobody asked for)
-[nobody needed this. nobody requested this. so naturally.. we built it]
+nobody needed this. nobody requested this. so naturally.. we built it
 
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-- [HTML+CSS]
-- [javaScript]
-- [html2canvas]
-- [data UR]
+- HTML+CSS
+- javaScript
+- html2canvas
+- data URl
 
 
 
 ### Implementation
 For Software:
 # Installation
-[Frontend: HTML, CSS, JavaScript
+Frontend: HTML, CSS, JavaScript
 Screenshot engine: html2canvas
 Backend: None
 Database: None
-Deployment: GitHub Pages / Netlify / Vercel]
+Deployment: GitHub Pages / Netlify / Vercel
 
 # Run
-[VS code]
+VS code
 
 ### Project Documentation
 For Software:Screenshot² is a deliberately useless web application developed for the Useless Hackathon 2026 by WORST TEAM. The application allows users to upload an image and repeatedly take a screenshot of the previous screenshot, creating an endless recursive screenshot effect.
@@ -64,8 +64,8 @@ shows the interface of project
 
 
 ## Team Contributions
-- [VIJAY GS]: [INTERFACE GUI BACKEND]
-- [ABHINAV.D]: [FRONTEND,PPT CREATION]
+- VIJAY GS: INTERFACE GUI BACKEND
+- ABHINAV.D: FRONTEND,PPT CREATION
 
 
 ---
