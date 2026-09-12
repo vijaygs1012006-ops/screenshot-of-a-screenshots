@@ -2,96 +2,71 @@
 
 
 
-# [Project Name] 🎯
+# [screenshot of a screenshot] 🎯
 
 
 ## Basic Details
-### Team Name: [Name]
+### Team Name: [worst]
 
 
 ### Team Members
-- Team Lead: [Name] - [College]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
+- Team Lead: [VIJAY GS] - [ACE COLLEGE OF ENGINEERING,KARINKADAMUGAL]
+- Member 2: [ABHINAV D] - [ACE COLLEGE OF ENGINEERING,KARINKADAMUGAL]
+
 
 ### Project Description
-[2-3 lines about what your project does]
+[screenshot already exist.but what if we could screenshot the screenshot?,and the screenshot that screenshot]
 
 ### The Problem (that doesn't exist)
-[What ridiculous problem are you solving?]
+[screenshotting a screenshot infinte times]
 
 ### The Solution (that nobody asked for)
-[How are you solving it? Keep it fun!]
+[nobody needed this. nobody requested this. so naturally.. we built it]
 
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-- [Languages used]
-- [Frameworks used]
-- [Libraries used]
-- [Tools used]
+- [HTML+CSS]
+- [javaScript]
+- [html2canvas]
+- [data UR]
 
-For Hardware:
-- [List main components]
-- [List specifications]
-- [List tools required]
+
 
 ### Implementation
 For Software:
 # Installation
-[commands]
+[Frontend: HTML, CSS, JavaScript
+Screenshot engine: html2canvas
+Backend: None
+Database: None
+Deployment: GitHub Pages / Netlify / Vercel]
 
 # Run
-[commands]
+[VS code]
 
 ### Project Documentation
-For Software:
+For Software:Screenshot² is a deliberately useless web application developed for the Useless Hackathon 2026 by WORST TEAM. The application allows users to upload an image and repeatedly take a screenshot of the previous screenshot, creating an endless recursive screenshot effect.
+
+The project is built using HTML, CSS, and JavaScript, with html2canvas used for browser-based screenshot generation. It requires no backend, database, or external API, making it lightweight and easy to deploy.
 
 # Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
+<img width="1508" height="917" alt="Screenshot 2026-09-12 055608" src="https://github.com/user-attachments/assets/eb67b6e2-43e6-4d13-8a03-4e8732194652" />
+shows the interface of project
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
+<img width="1496" height="925" alt="Screenshot 2026-09-12 055615" src="https://github.com/user-attachments/assets/ccb6b9d0-4d15-41cc-af4b-6b714ada2679" />
 
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
 
-# Diagrams
-![Workflow](Add your workflow/architecture diagram here)
-*Add caption explaining your workflow*
+<img width="1607" height="935" alt="Screenshot 2026-09-12 055623" src="https://github.com/user-attachments/assets/058a8279-81d2-46d5-a5fe-5d52b7b5f015" />
 
-For Hardware:
 
-# Schematic & Circuit
-![Circuit](Add your circuit diagram here)
-*Add caption explaining connections*
+<img width="1312" height="1199" alt="ChatGPT Image Sep 12, 2026, 06_00_05 AM" src="https://github.com/user-attachments/assets/f1104802-0eaa-41fd-9d00-28adb6a8846f" />
 
-![Schematic](Add your schematic diagram here)
-*Add caption explaining the schematic*
-
-# Build Photos
-![Components](Add photo of your components here)
-*List out all components shown*
-
-![Build](Add photos of build process here)
-*Explain the build steps*
-
-![Final](Add photo of final product here)
-*Explain the final build*
-
-### Project Demo
-# Video
-[Add your demo video link here]
-*Explain what the video demonstrates*
-
-# Additional Demos
-[Add any extra demo materials/links]
 
 ## Team Contributions
-- [Name 1]: [Specific contributions]
-- [Name 2]: [Specific contributions]
-- [Name 3]: [Specific contributions]
+- [VIJAY GS]: [INTERFACE GUI BACKEND]
+- [ABHINAV.D]: [FRONTEND,PPT CREATION]
+
 
 ---
 Made with ❤️ at TinkerHub Useless Projects 
