@@ -1,0 +1,823 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Screenshot²</title>
+
+<!-- html2canvas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Arial, Helvetica, sans-serif;
+        background:
+            radial-gradient(circle at top, #24243e, #090912 60%);
+        color: white;
+        display: flex;
+        justify-content: center;
+        padding: 30px;
+    }
+
+    .app {
+        width: min(1100px, 100%);
+    }
+
+    header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    h1 {
+        font-size: clamp(38px, 7vw, 72px);
+        margin: 0;
+        letter-spacing: -4px;
+    }
+
+    .subtitle {
+        margin-top: 8px;
+        color: #aaa;
+        font-size: 16px;
+    }
+
+    .stats {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin: 25px 0;
+    }
+
+    .stat {
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.12);
+        padding: 12px 20px;
+        border-radius: 14px;
+        min-width: 130px;
+        text-align: center;
+    }
+
+    .stat strong {
+        display: block;
+        font-size: 25px;
+        margin-bottom: 3px;
+    }
+
+    .stat span {
+        color: #999;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .controls {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 25px;
+    }
+
+    button,
+    .upload-label {
+        border: 0;
+        padding: 13px 20px;
+        border-radius: 12px;
+        background: white;
+        color: #111;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+        font-size: 14px;
+    }
+
+    button:hover,
+    .upload-label:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255,255,255,0.15);
+    }
+
+    button.secondary {
+        background: #252535;
+        color: white;
+        border: 1px solid #444;
+    }
+
+    button.danger {
+        background: #ff4d6d;
+        color: white;
+    }
+
+    #fileInput {
+        display: none;
+    }
+
+    .workspace {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 20px;
+        padding: 20px;
+        min-height: 450px;
+    }
+
+    .workspace-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #888;
+        font-size: 13px;
+        margin-bottom: 15px;
+    }
+
+    .canvas-area {
+        min-height: 380px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: auto;
+        border-radius: 14px;
+        background:
+            repeating-conic-gradient(#15151f 0% 25%, #11111a 0% 50%)
+            50% / 20px 20px;
+        padding: 30px;
+    }
+
+    #screenshotTarget {
+        background: white;
+        color: black;
+        width: min(700px, 100%);
+        min-height: 350px;
+        border-radius: 12px;
+        padding: 35px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .fake-browser {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+        background: white;
+    }
+
+    .browser-bar {
+        height: 42px;
+        background: #eee;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 0 13px;
+    }
+
+    .dot {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: #bbb;
+    }
+
+    .address {
+        margin-left: 8px;
+        background: white;
+        border-radius: 7px;
+        height: 25px;
+        flex: 1;
+        color: #aaa;
+        font-size: 11px;
+        display: flex;
+        align-items: center;
+        padding-left: 10px;
+    }
+
+    .browser-content {
+        padding: 25px;
+        text-align: center;
+    }
+
+    #uploadedImage {
+        max-width: 100%;
+        max-height: 500px;
+        display: none;
+        margin: 0 auto;
+        border-radius: 6px;
+    }
+
+    .placeholder {
+        padding: 60px 20px;
+        text-align: center;
+        color: #888;
+    }
+
+    .placeholder .icon {
+        font-size: 60px;
+        margin-bottom: 15px;
+    }
+
+    .placeholder h2 {
+        color: #555;
+        margin: 5px;
+    }
+
+    .placeholder p {
+        font-size: 13px;
+    }
+
+    .message {
+        text-align: center;
+        min-height: 25px;
+        margin: 18px 0;
+        color: #aaa;
+        font-size: 14px;
+        font-style: italic;
+    }
+
+    .footer {
+        text-align: center;
+        color: #555;
+        margin-top: 25px;
+        font-size: 12px;
+    }
+
+    .flash {
+        animation: flash 0.35s ease;
+    }
+
+    @keyframes flash {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.02);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    @media(max-width:600px) {
+        body {
+            padding: 15px;
+        }
+
+        .workspace {
+            padding: 10px;
+        }
+
+        .canvas-area {
+            padding: 10px;
+        }
+
+        #screenshotTarget {
+            padding: 15px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <header>
+        <h1>Screenshot²</h1>
+        <div class="subtitle">
+            Screenshot a screenshot of a screenshot of a screenshot...
+        </div>
+    </header>
+
+    <div class="stats">
+
+        <div class="stat">
+            <strong id="depth">0</strong>
+            <span>Screenshot Depth</span>
+        </div>
+
+        <div class="stat">
+            <strong id="pixels">0</strong>
+            <span>Pixels Wasted</span>
+        </div>
+
+        <div class="stat">
+            <strong id="status">Idle</strong>
+            <span>System Status</span>
+        </div>
+
+    </div>
+
+    <div class="controls">
+
+        <label class="upload-label" for="fileInput">
+            📁 Upload Screenshot
+        </label>
+
+        <input
+            type="file"
+            id="fileInput"
+            accept="image/*"
+        >
+
+        <button onclick="takeScreenshot()">
+            📸 Screenshot Again
+        </button>
+
+        <button class="secondary" onclick="autoMode()">
+            ♾️ Infinite Mode
+        </button>
+
+        <button class="danger" onclick="resetApp()">
+            🗑️ Destroy Everything
+        </button>
+
+        <button class="secondary" onclick="downloadImage()">
+            💾 Download
+        </button>
+
+    </div>
+
+    <div class="message" id="message">
+        Please upload an image to begin your journey into absolute uselessness.
+    </div>
+
+    <div class="workspace">
+
+        <div class="workspace-title">
+            <span>LIVE SCREENSHOT PREVIEW</span>
+            <span id="resolution">No image</span>
+        </div>
+
+        <div class="canvas-area">
+
+            <div id="screenshotTarget">
+
+                <div class="fake-browser">
+
+                    <div class="browser-bar">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+
+                        <div class="address">
+                            https://absolutely-useless.app
+                        </div>
+                    </div>
+
+                    <div class="browser-content">
+
+                        <div class="placeholder" id="placeholder">
+
+                            <div class="icon">📸</div>
+
+                            <h2>Nothing here yet.</h2>
+
+                            <p>
+                                Upload an image and begin the recursion.
+                            </p>
+
+                        </div>
+
+                        <img
+                            id="uploadedImage"
+                            alt="Recursive screenshot"
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Made with HTML, CSS, JavaScript and absolutely no practical purpose.
+    </div>
+
+</div>
+
+<script>
+
+let depth = 0;
+let currentImage = null;
+let autoRunning = false;
+let autoTimer = null;
+
+
+/* --------------------------------
+   Upload image
+-------------------------------- */
+
+document
+    .getElementById("fileInput")
+    .addEventListener("change", function(event) {
+
+        const file = event.target.files[0];
+
+        if (!file) return;
+
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+
+            currentImage = e.target.result;
+
+            const img =
+                document.getElementById("uploadedImage");
+
+            img.src = currentImage;
+            img.style.display = "block";
+
+            document
+                .getElementById("placeholder")
+                .style.display = "none";
+
+            depth = 0;
+
+            updateStats();
+
+            setMessage(
+                "Image successfully inserted. Your productivity is now decreasing."
+            );
+        };
+
+        reader.readAsDataURL(file);
+
+    });
+
+
+/* --------------------------------
+   Take screenshot
+-------------------------------- */
+
+async function takeScreenshot() {
+
+    if (!currentImage) {
+
+        setMessage(
+            "You need to upload something before destroying its quality."
+        );
+
+        return;
+    }
+
+    if (autoRunning === false) {
+
+        document
+            .getElementById("status")
+            .textContent = "Working...";
+
+    }
+
+    try {
+
+        const target =
+            document.getElementById("screenshotTarget");
+
+        const canvas =
+            await html2canvas(target, {
+                backgroundColor: "#ffffff",
+                scale: 1.5,
+                useCORS: true,
+                logging: false
+            });
+
+        currentImage =
+            canvas.toDataURL("image/png");
+
+        const img =
+            document.getElementById("uploadedImage");
+
+        img.src = currentImage;
+
+        depth++;
+
+        updateStats();
+
+        target.classList.remove("flash");
+
+        void target.offsetWidth;
+
+        target.classList.add("flash");
+
+        updateMessage();
+
+    } catch(error) {
+
+        console.error(error);
+
+        setMessage(
+            "The screenshot machine has experienced an existential crisis."
+        );
+
+        autoRunning = false;
+
+        clearInterval(autoTimer);
+    }
+
+}
+
+
+/* --------------------------------
+   Infinite mode
+-------------------------------- */
+
+function autoMode() {
+
+    if (!currentImage) {
+
+        setMessage(
+            "Upload an image first. Even uselessness needs an input."
+        );
+
+        return;
+    }
+
+    if (autoRunning) {
+
+        autoRunning = false;
+
+        clearInterval(autoTimer);
+
+        document
+            .getElementById("status")
+            .textContent = "Paused";
+
+        setMessage(
+            "Infinite Mode stopped. Humanity survives another day."
+        );
+
+        return;
+    }
+
+    autoRunning = true;
+
+    document
+        .getElementById("status")
+        .textContent = "∞ ACTIVE";
+
+    setMessage(
+        "INFINITE MODE ACTIVATED. There is no reason for this."
+    );
+
+    autoTimer =
+        setInterval(() => {
+
+            if (!autoRunning) return;
+
+            takeScreenshot();
+
+            if (depth >= 50) {
+
+                autoRunning = false;
+
+                clearInterval(autoTimer);
+
+                document
+                    .getElementById("status")
+                    .textContent = "50";
+
+                setMessage(
+                    "You reached 50 screenshots. Please seek help."
+                );
+            }
+
+        }, 1500);
+
+}
+
+
+/* --------------------------------
+   Download
+-------------------------------- */
+
+function downloadImage() {
+
+    if (!currentImage) {
+
+        setMessage(
+            "There is nothing to download. Much like this project."
+        );
+
+        return;
+    }
+
+    const link =
+        document.createElement("a");
+
+    link.href = currentImage;
+
+    link.download =
+        `screenshot-of-screenshot-${depth}.png`;
+
+    link.click();
+
+    setMessage(
+        "Congratulations. You downloaded your useless achievement."
+    );
+}
+
+
+/* --------------------------------
+   Reset
+-------------------------------- */
+
+function resetApp() {
+
+    autoRunning = false;
+
+    clearInterval(autoTimer);
+
+    depth = 0;
+
+    currentImage = null;
+
+    const img =
+        document.getElementById("uploadedImage");
+
+    img.src = "";
+
+    img.style.display = "none";
+
+    document
+        .getElementById("placeholder")
+        .style.display = "block";
+
+    document
+        .getElementById("fileInput")
+        .value = "";
+
+    document
+        .getElementById("status")
+        .textContent = "Idle";
+
+    updateStats();
+
+    setMessage(
+        "Everything has been erased. It was pointless anyway."
+    );
+}
+
+
+/* --------------------------------
+   Stats
+-------------------------------- */
+
+function updateStats() {
+
+    document
+        .getElementById("depth")
+        .textContent = depth;
+
+    const pixels =
+        depth === 0
+            ? 0
+            : Math.min(
+                999999999,
+                Math.floor(
+                    700 *
+                    400 *
+                    Math.pow(1.03, depth)
+                )
+            );
+
+    document
+        .getElementById("pixels")
+        .textContent =
+        pixels.toLocaleString();
+
+    const img =
+        document.getElementById("uploadedImage");
+
+    if (img.naturalWidth) {
+
+        document
+            .getElementById("resolution")
+            .textContent =
+            `${img.naturalWidth} × ${img.naturalHeight}`;
+
+    }
+
+}
+
+
+/* --------------------------------
+   Messages
+-------------------------------- */
+
+function setMessage(text) {
+
+    document
+        .getElementById("message")
+        .textContent = text;
+
+}
+
+
+function updateMessage() {
+
+    const messages = [
+
+        "Excellent. You have made the image more useless.",
+
+        "Screenshot successful. Nothing was accomplished.",
+
+        "Your screenshot has been screenshot.",
+
+        "This is technically progress.",
+
+        "The recursion continues.",
+
+        "Congratulations. You are going backwards.",
+
+        "Quality has decreased. Satisfaction has increased.",
+
+        "Somewhere, a computer scientist is disappointed.",
+
+        "You could have been studying.",
+
+        "Why are you still doing this?",
+
+        "The image is now questioning its existence.",
+
+        "This is what technology was invented for.",
+
+        "Absolutely nobody asked for this.",
+
+        "One more screenshot won't hurt.",
+
+        "It definitely will not become useful."
+    ];
+
+    const message =
+        messages[
+            Math.floor(
+                Math.random() * messages.length
+            )
+        ];
+
+    setMessage(message);
+
+    if (depth >= 10) {
+
+        setMessage(
+            `Screenshot #${depth}. You have gone too far.`
+        );
+
+    }
+
+    if (depth >= 25) {
+
+        setMessage(
+            `Screenshot #${depth}. Please touch grass.`
+        );
+
+    }
+
+    if (depth >= 40) {
+
+        setMessage(
+            `Screenshot #${depth}. There is no turning back.`
+        );
+
+    }
+
+}
+
+
+/* --------------------------------
+   Keyboard shortcut
+-------------------------------- */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.code === "Space" &&
+            currentImage
+        ) {
+
+            event.preventDefault();
+
+            takeScreenshot();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
+```
